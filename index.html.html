@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine Surprise for Ratna ❤️</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap');
+
+        body {
+            margin: 0; padding: 0; display: flex; justify-content: center; align-items: center;
+            min-height: 100vh; background: radial-gradient(circle, #4a001a, #000000);
+            color: white; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden; text-align: center; position: relative;
+        }
+
+        .heart-bg { position: absolute; top: -10%; color: rgba(255, 77, 148, 0.3); font-size: 20px; animation: fall linear forwards; z-index: 0; }
+        @keyframes fall { to { transform: translateY(110vh); } }
+
+        .container {
+            width: 95%; max-width: 420px; padding: 30px; background: rgba(255, 255, 255, 0.07);
+            border-radius: 30px; backdrop-filter: blur(15px); border: 1px solid rgba(255, 77, 148, 0.2);
+            box-shadow: 0 15px 45px rgba(255, 20, 147, 0.3); position: relative; z-index: 1;
+        }
+
+        .hidden { display: none; }
+
+        /* Welcome & Loading */
+        .welcome-heart { font-size: 100px; animation: pulse 1.2s infinite ease-in-out; filter: drop-shadow(0 0 20px #ff4d94); margin-bottom: 20px; }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+        
+        .open-btn { background: linear-gradient(45deg, #ff1493, #ff69b4); color: white; border: none; padding: 18px 45px; border-radius: 50px; font-weight: bold; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 15px rgba(255, 20, 147, 0.4); }
+        
+        .bar-bg { width: 100%; height: 15px; background: #222; border-radius: 10px; overflow: hidden; border: 1px solid #444; position: relative; }
+        /* Adjusted bar-fill to handle up to 120% smoothly */
+        .bar-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #ff1493, #ff69b4); transition: width 0.1s linear; }
+        .percentage { font-size: 2.5rem; font-weight: bold; margin-top: 10px; color: #ff69b4; }
+
+        /* Grid Styling */
+        .hearts-grid { display: flex; flex-direction: column; gap: 15px; margin-bottom: 20px; }
+        .reveal-box { background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); padding: 18px; border-radius: 50px; cursor: pointer; transition: 0.5s; display: flex; justify-content: center; align-items: center; }
+        .heart-icon { font-size: 32px; transition: 0.3s; }
+        .message { display: none; font-weight: bold; font-size: 1.1rem; color: white; animation: popIn 0.5s forwards; }
+        @keyframes popIn { 0% { transform: scale(0); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+
+        .opt1.revealed { background: #ff4d4d; box-shadow: 0 0 20px #ff4d4d; border: none; }
+        .opt2.revealed { background: #ff944d; box-shadow: 0 0 20px #ff944d; border: none; }
+        .opt3.revealed { background: #ffd633; box-shadow: 0 0 20px #ffd633; border: none; }
+        .opt4.revealed { background: #4dff88; box-shadow: 0 0 20px #4dff88; border: none; }
+        .opt5.revealed { background: #4da6ff; box-shadow: 0 0 20px #4da6ff; border: none; }
+        .revealed .heart-icon { display: none; }
+        .revealed .message { display: block; }
+
+        .see-more-btn { background: linear-gradient(45deg, #ff007f, #ff5e62, #ff9966); color: white; border: none; padding: 15px 35px; border-radius: 50px; font-weight: bold; cursor: pointer; animation: glowBtn 2s infinite; }
+        @keyframes glowBtn { 0%, 100% { box-shadow: 0 0 10px #ff007f; } 50% { box-shadow: 0 0 25px #ff007f; } }
+
+        /* GIFT BOX */
+        .gift-container { position: relative; width: 180px; height: 180px; margin: 20px auto; cursor: pointer; }
+        .gift-box { position: absolute; bottom: 0; width: 100%; height: 130px; background: #e91e63; border-radius: 0 0 10px 10px; z-index: 10; }
+        .gift-box::before { content: ""; position: absolute; left: 50%; width: 30px; height: 100%; background: #ffd700; transform: translateX(-50%); }
+        .gift-lid { position: absolute; top: 25px; left: -5%; width: 110%; height: 35px; background: #ff4081; border-radius: 10px; z-index: 11; transition: 0.8s; }
+        .gift-lid::before { content: ""; position: absolute; left: 50%; transform: translateX(-50%); width: 30px; height: 100%; background: #ffd700; }
+        .gift-container.open .gift-lid { transform: translateY(-100px) rotate(-15deg); opacity: 0; }
+
+        /* MEMORY BUTTON */
+        .memory-btn { 
+            background: linear-gradient(45deg, #ff4d94, #c71585); 
+            color: white; border: 2px solid #ffd700; padding: 16px 28px; 
+            border-radius: 20px; font-weight: bold; cursor: pointer; 
+            margin-top: 20px; animation: glowPulse 2s infinite; display: none;
+            font-size: 1.1rem;
+        }
+        @keyframes glowPulse { 0% { box-shadow: 0 0 10px #ff4d94; } 50% { box-shadow: 0 0 30px #ff4d94; transform: scale(1.05); } 100% { box-shadow: 0 0 10px #ff4d94; } }
+
+        /* PHOTO BOOK STYLING */
+        .book-container { width: 300px; height: 450px; margin: 20px auto; perspective: 1500px; }
+        .book { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; }
+        .page {
+            width: 100%; height: 100%; position: absolute; top: 0; left: 0;
+            background: #fff; color: #4a001a; border-radius: 5px 15px 15px 5px;
+            box-shadow: inset 3px 0 10px rgba(0,0,0,0.1), 5px 5px 15px rgba(0,0,0,0.3);
+            display: flex; flex-direction: column; align-items: center; padding: 15px;
+            backface-visibility: hidden; transform-origin: left; transition: transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
+        }
+        .page.flipped { transform: rotateY(-180deg); }
+        .page img { width: 90%; height: 220px; object-fit: cover; border-radius: 10px; margin-bottom: 10px; border: 3px solid #ffb3d1; }
+        .page h3 { font-family: 'Dancing Script', cursive; font-size: 1.8rem; color: #ff1493; margin: 5px 0; }
+        .page p { font-size: 0.95rem; font-style: italic; line-height: 1.4; padding: 0 10px; }
+
+        /* FINAL THANK YOU PAGE SPECIAL STYLING */
+        #page4 {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            border: 2px solid #ffffff;
+            color: #4a001a;
+        }
+        .thank-you-heart {
+            font-size: 80px;
+            margin-top: 20px;
+            animation: heartbeat 1.5s infinite;
+            filter: drop-shadow(0 0 15px #ff1493);
+        }
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            15% { transform: scale(1.3); }
+            30% { transform: scale(1); }
+            45% { transform: scale(1.15); }
+            60% { transform: scale(1); }
+        }
+
+        .credit-text {
+            font-size: 0.9rem;
+            color: #d81b60;
+            margin-top: 10px;
+            font-weight: bold;
+            font-family: 'Dancing Script', cursive;
+        }
+
+        .tap-text { font-size: 0.9rem; color: #ffd700; margin-top: 10px; animation: flash 1s infinite; }
+        @keyframes flash { 50% { opacity: 0.3; } }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div id="firstPage">
+            <div class="welcome-heart">💖</div>
+            <h1 style="font-family: 'Dancing Script', cursive; font-size: 3rem;">Dear Ratna,</h1>
+            <p>I've collected our most precious memories here...</p>
+            <button class="open-btn" onclick="startLoading()">Open my Heart</button>
+        </div>
+
+        <div id="loadingPage" class="hidden">
+            <div class="loading-title" style="margin-bottom: 10px;">Reliving our memories...</div>
+            <div class="bar-bg"><div id="bar" class="bar-fill"></div></div>
+            <div id="percentText" class="percentage">0%</div>
+            <p style="font-size: 0.8rem; margin-top: 10px; color: #ffb3d1;">Loading extra love for you...</p>
+        </div>
+
+        <div id="mainPage" class="hidden">
+            <div class="welcome-heart" style="font-size: 60px;">💝</div>
+            <h1>Special for Ratna</h1>
+            <div class="hearts-grid">
+                <div class="reveal-box opt1" onclick="reveal(this)"><span class="heart-icon">❤️</span><span class="message">You are adorable, Ratna!</span></div>
+                <div class="reveal-box opt2" onclick="reveal(this)"><span class="heart-icon">🧡</span><span class="message">The handsomest vibe ever!</span></div>
+                <div class="reveal-box opt3" onclick="reveal(this)"><span class="heart-icon">💛</span><span class="message">You light up my world!</span></div>
+                <div class="reveal-box opt4" onclick="reveal(this)"><span class="heart-icon">💚</span><span class="message">Naturally charming boy!</span></div>
+                <div class="reveal-box opt5" onclick="reveal(this)"><span class="heart-icon">💙</span><span class="message">My absolute favorite person!</span></div>
+            </div>
+            <div id="seeMoreArea" class="hidden"><button class="see-more-btn" onclick="goFinal()">See My Memories ➔</button></div>
+        </div>
+
+        <div id="finalPage" class="hidden">
+            <h2 style="color: #ff85b3;">A Box of Memories...</h2>
+            <div class="gift-container" id="gBox" onclick="openGift()">
+                <div style="position: absolute; top: -15px; left: 50%; transform: translateX(-50%); font-size: 50px; z-index: 12;">🎀</div>
+                <div class="gift-lid"></div>
+                <div class="gift-box"></div>
+            </div>
+            <p id="tText" class="tap-text">Tap the gift to open memories!</p>
+            <button id="mBtn" class="memory-btn" onclick="openBook()">✨ Our Precious Memories ✨</button>
+        </div>
+
+        <div id="bookPage" class="hidden">
+            <div class="book-container">
+                <div class="book" id="myBook">
+                    <div class="page" id="page4">
+                        <div class="thank-you-heart">❤️</div>
+                        <h3 style="margin-top: 5px; color: #d81b60;">Thank You</h3>
+                        <h2 style="font-family: 'Dancing Script', cursive; color: #ff1493; font-size: 2.5rem; margin: 0;">Ratna Shah</h2>
+                        <div style="width: 60px; height: 3px; background: #ffffff; margin: 10px 0;"></div>
+                        <p style="font-size: 1rem; color: #4a001a; font-weight: 600; line-height: 1.3;">"Thank you for being the most incredible part of my life. Every day feels like Valentine's Day with you!"</p>
+                        <p style="font-family: 'Dancing Script', cursive; font-size: 1.3rem; color: #ff1493; margin-top: 5px;">Forever Yours... </p>
+                        <div class="credit-text">Your Dear Prachi</div>
+                        <button class="open-btn" style="padding:10px 20px; font-size:0.9rem; margin-top: 10px; background: #d81b60;" onclick="location.reload()"> ❤️</button>
+                    </div>
+
+                    <div class="page" id="page3">
+                        <img src="public-3.jpg" alt="Memory 3">
+                        <h3>My Promise</h3>
+                        <p>"I promise to stay by your side, hamesha mere dil ke paas ho. Happy Valentine's Day, Ratna! 🌹"</p>
+                        <p style="font-size: 0.8rem; color: #ff1493; margin-top: 15px; font-weight: bold;">Tap to Read Final Message ➔</p>
+                    </div>
+
+                    <div class="page" id="page2">
+                        <img src="public-2.jpg" alt="Memory 2">
+                        <h3>Dil ni Vaat</h3>
+                        <p>"Ratna, tamari smile dekhine aakhu jagat bhuli jaau chu. Tumhaare bina mera Valentine adhoora hai. ❤️"</p>
+                        <p style="font-size: 0.8rem; color: #888;">Tap to flip next page ➔</p>
+                    </div>
+
+                    <div class="page" id="page1">
+                        <img src="public.jpg" alt="Memory 1">
+                        <h3>To My Dearest</h3>
+                        <p>"Every moment with you is a memory I treasure. Being with you, Ratna, is my only true desire."</p>
+                        <p style="font-size: 0.8rem; color: #888;">Tap to flip page ➔</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart-bg'); heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 3 + 2 + 's';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 5000);
+        }
+        setInterval(createHeart, 400);
+
+        function startLoading() {
+            document.getElementById('firstPage').classList.add('hidden');
+            document.getElementById('loadingPage').classList.remove('hidden');
+            let progress = 0;
+            const target = 120; // 120% Love
+            
+            let interval = setInterval(() => {
+                if (progress >= target) {
+                    clearInterval(interval);
+                    // Slight delay at 120% for effect
+                    setTimeout(() => {
+                        document.getElementById('loadingPage').classList.add('hidden');
+                        document.getElementById('mainPage').classList.remove('hidden');
+                    }, 800);
+                } else {
+                    progress += 1;
+                    // Bar maxes at 100% width but text goes to 120%
+                    document.getElementById('bar').style.width = (progress > 100 ? 100 : progress) + "%";
+                    document.getElementById('percentText').innerText = Math.floor(progress) + "%";
+                }
+            }, 40); // Slightly adjusted speed for smoothness
+        }
+
+        let revealedCount = 0;
+        function reveal(element) {
+            if (!element.classList.contains('revealed')) {
+                element.classList.add('revealed');
+                revealedCount++;
+                if (navigator.vibrate) navigator.vibrate(50);
+                if (revealedCount === 5) document.getElementById('seeMoreArea').classList.remove('hidden');
+            }
+        }
+
+        function goFinal() {
+            document.getElementById('mainPage').classList.add('hidden');
+            document.getElementById('finalPage').classList.remove('hidden');
+        }
+
+        function openGift() {
+            document.getElementById('gBox').classList.add('open');
+            document.getElementById('tText').classList.add('hidden');
+            if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
+            setTimeout(() => { document.getElementById('mBtn').style.display = 'block'; }, 800);
+        }
+
+        function openBook() {
+            document.getElementById('finalPage').classList.add('hidden');
+            document.getElementById('bookPage').classList.remove('hidden');
+        }
+
+        let currentPage = 1;
+        document.getElementById('bookPage').addEventListener('click', function() {
+            if (currentPage < 4) {
+                document.getElementById('page' + currentPage).classList.add('flipped');
+                currentPage++;
+            }
+        });
+    </script>
+</body>
+</html>
